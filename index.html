@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOLSTICE // Time-Shift Slider</title>
+  <meta name="description" content="A simple yet creative slider experience that controls the 24-hour cycle of light, time, and atmosphere.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2238%22 fill=%22%23f59e0b%22/></svg>">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Dynamic Sky Glow -->
+  <div class="sky-atmosphere" id="skyAtmosphere"></div>
+
+  <!-- Stars layer (visible at night) -->
+  <div class="stars-canvas" id="starsLayer"></div>
+
+  <div class="app-shell">
+    
+    <!-- Minimal Header -->
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-orbit"></span>
+        <span class="logo-text">SOLSTICE</span>
+      </div>
+
+      <div class="time-readout">
+        <span class="time-clock" id="clockDisplay">18:30</span>
+        <span class="time-phase" id="phaseDisplay">GOLDEN HOUR</span>
+      </div>
+
+      <button class="cycle-btn" id="cycleBtn" title="Auto-play 24 hour cycle">
+        <svg id="playIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <svg id="pauseIcon" class="hidden" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        <span id="cycleLabel">Play 24H</span>
+      </button>
+    </header>
+
+    <!-- Main Visual Stage: The Time-Shift Landscape -->
+    <main class="scene-stage">
+      
+      <div class="scene-frame">
+        <!-- Celestial Body (Sun & Moon that orbits along an arc) -->
+        <div class="celestial-orbit">
+          <div class="celestial-body sun" id="sunOrb">
+            <div class="sun-flare"></div>
+          </div>
+          <div class="celestial-body moon" id="moonOrb">
+            <div class="moon-crescent"></div>
+          </div>
+        </div>
+
+        <!-- Base Landscape Image -->
+        <div class="scene-media-wrap">
+          <img src="./assets/slide4.jpg" alt="Architectural Sanctuary" class="scene-base-img" id="sceneImg">
+          
+          <!-- Dynamic Lighting Shaders -->
+          <div class="lighting-overlay morning" id="layerMorning"></div>
+          <div class="lighting-overlay noon" id="layerNoon"></div>
+          <div class="lighting-overlay sunset" id="layerSunset"></div>
+          <div class="lighting-overlay night" id="layerNight"></div>
+          
+          <!-- Warm Window Interior Glow (activates at dusk/night) -->
+          <div class="interior-glow" id="interiorGlow"></div>
+        </div>
+
+        <!-- Ambient Info Overlay -->
+        <div class="scene-caption">
+          <span class="caption-tag" id="ambientTemp">28°C • Warm Breeze</span>
+          <span class="caption-title" id="ambientMood">Sun slipping beneath the canyon horizon</span>
+        </div>
+      </div>
+
+      <!-- THE CREATIVE SLIDER: Center Stage -->
+      <section class="slider-console">
+        <div class="slider-bar-wrap">
+          
+          <!-- Interactive Time Slider -->
+          <div class="range-container">
+            <div class="slider-sun-track" id="sliderFillTrack"></div>
+            <input 
+              type="range" 
+              id="timeSlider" 
+              class="time-slider" 
+              min="0" 
+              max="1440" 
+              value="1110" 
+              step="1"
+              aria-label="24 Hour Time Slider"
+            >
+            <!-- Floating Time Bubble -->
+            <div class="time-bubble" id="timeBubble">
+              <span id="bubbleTime">18:30</span>
+            </div>
+          </div>
+
+          <!-- Time Markers -->
+          <div class="slider-markers">
+            <button class="marker-btn" data-time="0">
+              <span class="marker-dot"></span>
+              <span class="marker-label">00:00<br><small>Night</small></span>
+            </button>
+            <button class="marker-btn" data-time="360">
+              <span class="marker-dot"></span>
+              <span class="marker-label">06:00<br><small>Dawn</small></span>
+            </button>
+            <button class="marker-btn" data-time="720">
+              <span class="marker-dot"></span>
+              <span class="marker-label">12:00<br><small>Noon</small></span>
+            </button>
+            <button class="marker-btn active" data-time="1110">
+              <span class="marker-dot"></span>
+              <span class="marker-label">18:30<br><small>Sunset</small></span>
+            </button>
+            <button class="marker-btn" data-time="1320">
+              <span class="marker-dot"></span>
+              <span class="marker-label">22:00<br><small>Dusk</small></span>
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Minimal Subtle Footer -->
+    <footer class="app-footer">
+      <span>Drag slider horizontally or press <kbd>←</kbd> <kbd>→</kbd> to travel through time</span>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
